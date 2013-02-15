@@ -3,6 +3,13 @@ module Iamwatching
     
     def self.included(base)          
       base.send(:extend, ClassMethods)
+      base.send(:include, InstanceMethods)
+    end
+    
+    module InstanceMethods
+      def it_happened(event, *args)
+        self.curious_objects
+      end
     end
     
     module ClassMethods

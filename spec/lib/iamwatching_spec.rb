@@ -35,15 +35,19 @@ describe "Iamwatching" do
       ToBeObserved.tell(@curious_object).about(:done)
       ToBeObserved.curious_objects.should include(@curious_object)      
     end
-  end
+    
+    it "should respond to it_happened" do
+      @verbose_object.should respond_to(:it_happened)
+    end
+    
+    it "should fire an event" do                
+      @verbose_object.should_receive(:it_happened).with(:done)
+      @verbose_object.its_done!
+    end
   
-  it "should fire an event" do                
-    @verbose_object.should_receive(:it_happened).with(:done)
-    @verbose_object.its_done!
-  end
-  
-  it "should fire an event and pass a payload" do
-    @verbose_object.should_receive(:it_happened).with(:nearly_done, {some: :payload})
-    @verbose_object.its_nearly_done!        
-  end
+    it "should fire an event and pass a payload" do
+      @verbose_object.should_receive(:it_happened).with(:nearly_done, {some: :payload})
+      @verbose_object.its_nearly_done!        
+    end
+  end  
 end
