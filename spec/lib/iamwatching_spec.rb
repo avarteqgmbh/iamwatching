@@ -4,6 +4,9 @@ describe "Iamwatching" do
   
   it "should register a observer by one command a line" do
     class ToBeObserved
+      
+      include Iamwatching::ITellOthers
+      
       i_tell_others_about :done
       i_tell_others_about :nearly_done
       
