@@ -1,0 +1,16 @@
+PATH
+  remote: .
+  specs:
+    iamwatching (0.0.1)
+      facets (>= 2.9.3)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    facets (2.9.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  iamwatching!
