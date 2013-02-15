@@ -19,6 +19,14 @@ describe "Iamwatching" do
     end
             
     class AnObserver
+      
+      let_me_know_about :done do
+        :i_am_done
+      end
+      
+      let_me_know_about :nearly_done do |payload|
+        [:i_am_nearly_done, payload]
+      end
     end
     
     @verbose_object = ToBeObserved.new
@@ -49,5 +57,20 @@ describe "Iamwatching" do
       @verbose_object.should_receive(:it_happened).with(:nearly_done, {some: :payload})
       @verbose_object.its_nearly_done!        
     end
-  end  
+  end
+  
+  context "AnObserver" do
+    
+    it "should respond to done_happened" do
+      @curious_object.should respond_to(:done_happened)
+    end    
+    
+    it "should respond to nearly_done_happened" do
+      @curious_object.should respond_to(:nearly_done_happened)
+    end
+    
+    it "should be notified when done" do
+      @curious_object.should_receive(:nearly_done_happened).with({some: :payload})
+    end
+  end 
 end
