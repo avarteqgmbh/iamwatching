@@ -87,6 +87,7 @@ describe "Iamwatching" do
     end
     
     it "should be notified when nearly_done" do
+      ToBeObserved.tell(@curious_object).about(:done)
       ToBeObserved.tell(@curious_object).about(:nearly_done_happened)
       @verbose_object.its_nearly_done!
       @curious_object.should_not_receive(:done_happened)
