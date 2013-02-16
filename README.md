@@ -1,6 +1,6 @@
 # Iamwatching
 
-TODO: Write a gem description
+Iamwatching is a class level implementation of the observer pattern.
 
 ## Installation
 
@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+TODO: Write usage instructions herea 
 
 ## Contributing
 

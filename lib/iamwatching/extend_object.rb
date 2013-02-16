@@ -4,7 +4,7 @@ class Object
       self.send(:include, Iamwatching::ITellOthers)
     end
     
-    def let_me_know_about(event, *args, &block)
+    def let_me_know_about(event, &block)
       if block_given? then
         define_method "#{event}_happened", block
       end

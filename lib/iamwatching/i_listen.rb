@@ -6,7 +6,7 @@ module Iamwatching
     end
     
     module InstanceMethods
-      def it_happened(event, *args)
+      def it_happened(event, payload = nil)
         if observer.respond_to?(message)
           observer.send(message, *args)
         else

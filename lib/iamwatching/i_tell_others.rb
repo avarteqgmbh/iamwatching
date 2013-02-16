@@ -7,30 +7,30 @@ module Iamwatching
     end
     
     module InstanceMethods
-      def it_happened(event, *args)
-        self.curious_objects.each do |curious_object| 
-          event_method = "#{event}_happened"
-          if curiours_object.responds_to?(event_method) then
-            curious_object.it_happened(event, args)
-          else
-            raise "Tried to trigger event #{event} but observer doesnt respond to #{event_method}"
-          end
-        end
-      end
     end
     
     module ClassMethods
+      
+      def it_happened(event, payload = nil)
+
+        # Be aware of "self" here when mixing this module in to a class.
+        # self = #<ToBeObserved:0x007ff0429cb6b8>
+        # self.class = ToBeObserved
+        
+        #require 'debugger' ;; debugger
+        self.curious_objects.each { |curious_object| curious_object.it_happend(event, payload) }
+      end
       
       def curious_objects
         @@curious_objects ||= Iamwatching::CuriousObjects.new
         @@curious_objects 
       end
       
+      # Add curious object
       def tell(curious_object)        
         curious_objects
-        @@curious_objects << curious_object
-        curious_objects
-      end      
+        @@curious_objects.add(curious_object)
+      end
     end
   end
 end
