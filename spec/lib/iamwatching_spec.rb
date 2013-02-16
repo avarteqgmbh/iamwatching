@@ -10,11 +10,11 @@ describe "Iamwatching" do
       i_tell_others_about :nearly_done
       
       def its_done!
-        self.it_happened(:done)
+        ToBeObserved.it_happened(:done)
       end
       
       def its_nearly_done!
-        self.it_happened(:nearly_done, {some: :payload})
+        ToBeObserved.it_happened(:nearly_done, {some: :payload})
       end
     end
     
