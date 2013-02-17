@@ -1,5 +1,8 @@
 module Iamwatching
-  class CuriousObjects < Hash
+  class CuriousObjects
+    
+    attr_reader :list
+    
     def initialize
       @list = []
     end
@@ -16,6 +19,10 @@ module Iamwatching
   
     def find_by_event(event)
       @list.select { |curious| curious.events.include?(event) }
+    end
+
+    def to_s
+      @list.inspect
     end
   end
 end

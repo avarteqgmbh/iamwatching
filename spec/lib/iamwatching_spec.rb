@@ -20,15 +20,23 @@ describe "Iamwatching" do
     
     class AnObserver
       
-      let_me_know_about :done do
+      def done_happened(payload)
         puts "I am done"
-        :i_am_done
       end
       
-      let_me_know_about :nearly_done do
+      def nearly_done_happened(payload)
         puts "I am nearly done"
-        :i_am_nearly_done
       end
+      
+      # let_me_know_about :done do |payload|
+      #   puts "I am done"
+      #   :i_am_done
+      # end
+      # 
+      # let_me_know_about :nearly_done do |payload|
+      #   puts "I am nearly done"
+      #   :i_am_nearly_done
+      # end
     end
     
     @verbose_object = ToBeObserved.new
@@ -55,16 +63,16 @@ describe "Iamwatching" do
     end
     
     it "should respond to it_happened" do
-      @verbose_object.should respond_to(:it_happened)
+      ToBeObserved.should respond_to(:it_happened)
     end
     
     it "should fire an event" do                
-      @verbose_object.should_receive(:it_happened).with(:done)
+      ToBeObserved.should_receive(:it_happened).with(:done)
       @verbose_object.its_done!
     end
   
     it "should fire an event and pass a payload" do
-      @verbose_object.should_receive(:it_happened).with(:nearly_done, {some: :payload})
+      ToBeObserved.should_receive(:it_happened).with(:nearly_done, {some: :payload})
       @verbose_object.its_nearly_done!      
     end
   end
@@ -81,17 +89,21 @@ describe "Iamwatching" do
     
     it "should be notified when done" do
       ToBeObserved.tell(@curious_object).about(:done)
-      @verbose_object.its_done!
+      ToBeObserved.curious_objects.find_by_object(@curious_object).should be_instance_of(Iamwatching::CuriousObject)
       @curious_object.should_not_receive(:nearly_done_happened)
       @curious_object.should_receive(:done_happened)
+  
+      @verbose_object.its_done!
     end
     
     it "should be notified when nearly_done" do
-      ToBeObserved.tell(@curious_object).about(:done)
-      ToBeObserved.tell(@curious_object).about(:nearly_done_happened)
-      @verbose_object.its_nearly_done!
+      ToBeObserved.tell(@curious_object).about(:nearly_done)
+      ToBeObserved.curious_objects.find_by_object(@curious_object).should be_instance_of(Iamwatching::CuriousObject)
+      ToBeObserved.curious_objects.find_by_object(@curious_object).events.should include(:nearly_done)
       @curious_object.should_not_receive(:done_happened)
       @curious_object.should_receive(:nearly_done_happened).with({some: :payload})
+  
+      @verbose_object.its_nearly_done!
     end
   end 
 end
