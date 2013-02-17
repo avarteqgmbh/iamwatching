@@ -1,6 +1,18 @@
 # Iamwatching
 
 Iamwatching is a class level implementation of the observer pattern.
+In contrast to Ruby's [Observable](http://apidock.com/ruby/Observable) Iamwatching can be used
+to track more than one event of an observable.
+
+Example:
+Consider you have a contract class that emits two events:
+
+1. contract is due to be invoiced
+2. contract has been canceled
+
+So it's likely that there will be two different listeners being interested in either event no. 1 or event no. 2.
+
+**Iamwatching helps to maintain a list of listeners for each event the class supports**.
 
 ## Installation
 

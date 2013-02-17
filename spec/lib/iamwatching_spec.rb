@@ -20,23 +20,13 @@ describe "Iamwatching" do
     
     class AnObserver
       
-      def done_happened(payload)
-        puts "I am done"
+      let_me_know_about :done do |payload|
+        :i_am_done
       end
       
-      def nearly_done_happened(payload)
-        puts "I am nearly done"
+      let_me_know_about :nearly_done do |payload|
+        :i_am_nearly_done
       end
-      
-      # let_me_know_about :done do |payload|
-      #   puts "I am done"
-      #   :i_am_done
-      # end
-      # 
-      # let_me_know_about :nearly_done do |payload|
-      #   puts "I am nearly done"
-      #   :i_am_nearly_done
-      # end
     end
     
     @verbose_object = ToBeObserved.new
