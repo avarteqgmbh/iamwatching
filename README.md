@@ -30,7 +30,39 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions herea 
+    class ToBeObserved
+    
+      i_tell_others_about :done
+      i_tell_others_about :nearly_done
+      
+      def its_done!
+        ToBeObserved.it_happened(:done)
+      end
+      
+      def its_nearly_done!
+        ToBeObserved.it_happened(:nearly_done, {some: :payload})
+      end
+    end
+    
+    class AnObserver
+      
+      let_me_know_about :done do |payload|
+        # Do something
+      end
+      
+      let_me_know_about :nearly_done do |payload|
+        # Do something
+      end
+    end
+    
+    verbose_object = ToBeObserved.new
+    curious_object = AnObserver.new
+    
+    ToBeObserved.tell(curious_object).about(:nearly_done)
+    @verbose_object.its_nearly_done!
+
+The methods let_me_know_about will create instance methods such as done_happened that will
+be invoked in case the verbose_oject will fire the event "done".
 
 ## Contributing
 
